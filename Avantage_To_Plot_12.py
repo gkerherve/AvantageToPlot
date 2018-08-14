@@ -410,6 +410,11 @@ def _run():
             MinMaxC1s = Plot_Settings.iloc[i,3+PlotSettingNumber*4]
             MinC1s = Plot_Settings.iloc[i,1+PlotSettingNumber*4]
             MaxC1s = Plot_Settings.iloc[i,2+PlotSettingNumber*4]
+
+        elif Plot_Settings.iloc[i,0+PlotSettingNumber*4] == 'B1s' :
+            MinMaxB1s = Plot_Settings.iloc[i,3+PlotSettingNumber*4]
+            MinB1s = Plot_Settings.iloc[i,1+PlotSettingNumber*4]
+            MaxB1s = Plot_Settings.iloc[i,2+PlotSettingNumber*4]
     
         elif Plot_Settings.iloc[i,0+PlotSettingNumber*4] == 'F1s' :
             MinMaxF1s = Plot_Settings.iloc[i,3+PlotSettingNumber*4]
@@ -652,7 +657,7 @@ def _run():
             plt.xlabel("Binding Energy (eV)")
             plt.tight_layout()
             ax.text(0.01,.92,plotname, horizontalalignment = "left", transform=ax.transAxes, 
-                fontsize=16, fontweight='bold'  )
+                fontsize=16, fontweight='bold'  ) # +'$\mathbf{\mathit{s}}$'
             I_max =0
             I_min = 100
             
@@ -877,6 +882,7 @@ def _run():
                                         if labelFitSplit1[2] == 'D' : labelFitSplit1[1] = "4"
                                         labelFitSplit1[2] = ""                        
                                 elif labelFitSplit1[0].endswith('1s'):
+                                    #print('CCCCCCCCCCCCCCCCCCCCCCCCCCCCCC     ', labelFitSplit1[1], '   ', len(data_fit.columns), '   ' ,labelFitSplit1[2])
                                     if len(data_fit.columns) <9: 
                                         labelFitSplit1[1] = ""
                                         labelFitSplit1[2] = ""
@@ -884,7 +890,9 @@ def _run():
                                         if labelFitSplit1[2] == 'A' : labelFitSplit1[1] = "1"
                                         if labelFitSplit1[2] == 'B' : labelFitSplit1[1] = "2"
                                         if labelFitSplit1[2] == 'C' : labelFitSplit1[1] = "3"
-                                        if labelFitSplit1[2] == 'D' : labelFitSplit1[1] = "4"                                    
+                                        if labelFitSplit1[2] == 'D' : labelFitSplit1[1] = "4"   
+                                        labelFitSplit1[2] = "" 
+                                    #print('DDDDDDDDDDDDDDDDDDDDDDDDDDDDD     ', labelFitSplit1[1], '   ', len(data_fit.columns), '   ' ,labelFitSplit1[1])
                         else : 
                             labelFitSplit1[0] = ''
                             labelFitSplit5 = ''
@@ -892,19 +900,23 @@ def _run():
                             label_fit = labelFitSplit5
                             #print('FINAL1      ',labelFitSplit5)
                             
-                    if labelFitSplit1[0].endswith(('p3','d5','f7')): 
-                        if labelFitSplit1[0].endswith('p3'):
+                    if labelFitSplit1[0].endswith(('1s','p3','d5','f7')): 
+                        if labelFitSplit1[0].endswith('1s'): 
+                            labelFitSplit2 =str.split(labelFitSplit1[0],'1s')
+                            labelFitSplit3 = labelFitSplit2[0]                            
+                            labelFitSplit4 = labelFitSplit3[:-1] +' ' + labelFitSplit3[len(labelFitSplit3)-1:] + '1$\mathit{s}$'
+                        elif labelFitSplit1[0].endswith('p3'):
                             labelFitSplit2 =str.split(labelFitSplit1[0],'p3')
                             labelFitSplit3 = labelFitSplit2[0]
-                            labelFitSplit4 = labelFitSplit3[:-1] +' ' + labelFitSplit3[len(labelFitSplit3)-1:] + 'p$_{3/2}$'
-                        if labelFitSplit1[0].endswith('d5'):
+                            labelFitSplit4 = labelFitSplit3[:-1] +' ' + labelFitSplit3[len(labelFitSplit3)-1:] + '$\mathit{p}_{3/2}$'
+                        elif labelFitSplit1[0].endswith('d5'):
                             labelFitSplit2 =str.split(labelFitSplit1[0],'d5')
                             labelFitSplit3 = labelFitSplit2[0]
-                            labelFitSplit4 = labelFitSplit3[:-1] +' ' + labelFitSplit3[len(labelFitSplit3)-1:] + 'd$_{5/2}$'                        
-                        if labelFitSplit1[0].endswith('f7'):
+                            labelFitSplit4 = labelFitSplit3[:-1] +' ' + labelFitSplit3[len(labelFitSplit3)-1:] + '$\mathit{d}_{5/2}$'                        
+                        elif labelFitSplit1[0].endswith('f7'):
                             labelFitSplit2 =str.split(labelFitSplit1[0],'f7')
                             labelFitSplit3 = labelFitSplit2[0]
-                            labelFitSplit4 = labelFitSplit3[:-1] +' ' + labelFitSplit3[len(labelFitSplit3)-1:] + 'f$_{7/2}$'    
+                            labelFitSplit4 = labelFitSplit3[:-1] +' ' + labelFitSplit3[len(labelFitSplit3)-1:] + '$\mathit{f}_{7/2}$'    
                        
                         labelFitSplit5 =''
                         for i1 in range(1, len(labelFitSplit1)): labelFitSplit5 = labelFitSplit5 + ' ' + labelFitSplit1[i1]
@@ -1026,6 +1038,7 @@ def _run():
     df_P2p = pd.DataFrame()
     df_O1s = pd.DataFrame()
     df_C1s = pd.DataFrame()
+    df_B1s = pd.DataFrame()
     df_F1s = pd.DataFrame()
     df_Na1s = pd.DataFrame()
     df_N1s = pd.DataFrame()
@@ -1059,6 +1072,7 @@ def _run():
     df_P2ps = pd.DataFrame()
     df_O1ss = pd.DataFrame()
     df_C1ss = pd.DataFrame()
+    df_B1ss = pd.DataFrame()
     df_F1ss = pd.DataFrame()
     df_Na1ss = pd.DataFrame()
     df_N1ss = pd.DataFrame()
@@ -1096,6 +1110,7 @@ def _run():
     df_P2pT = []
     df_O1sT = []
     df_C1sT = []
+    df_B1sT = []
     df_F1sT = []
     df_Na1sT = []
     df_N1sT = []
@@ -1129,6 +1144,7 @@ def _run():
     df_P2psT = []
     df_O1ssT = []
     df_C1ssT = []
+    df_B1ssT = []
     df_F1ssT = []
     df_Na1ssT = []
     df_N1ssT = []
@@ -1314,6 +1330,8 @@ def _run():
                 plotname = 'O 1s'
             if plotname[0:2] == 'C1':
                 plotname = 'C 1s'        
+            if plotname[0:2] == 'B1':
+                plotname = 'B 1s' 
             if plotname[0:2] == 'F1':
                 plotname = 'F 1s' 
             if plotname[0:2] == 'N1':
@@ -2360,6 +2378,37 @@ def _run():
                         df_C1ss = new  
                         df_C1ssT.append(Sample_name[j])
             #----------------------------------------------------
+
+            #-----CHECK B1s--------------------------------------
+            elif plotname == 'B 1s':
+                if MinMaxB1s == True:                                              #START HERE
+                    plotMinMax = True                              
+                    for i_Max in range (i_start,len(x_BE)+i_start):
+                        if x_BE[i_Max] < MaxB1s: break#                        HERE
+                    for i_Min in range (i_start,len(x_BE)+i_start):
+                        if x_BE[i_Min] < MinB1s: break#                        HERE       
+                    plotMax = x_BE[i_Max]
+                    plotMin = x_BE[i_Min]
+                    if Div_Area_Check == False:      
+                        y_BKG = (y[i_Min-3]+y[i_Min-2]+y[i_Min-1]+y[i_Min])/4       
+                        y2 = y - y_BKG                 
+                        y2 = 100* y2 / max(y2[i_Max:i_Min-1])             
+                        y3 = 100* y3 / max(y3[i_Max:i_Min-1])                       #FINISH HERE 
+                    else:
+                        if i_Min -3 < i_start: y_BKG = y[i_Min]
+                        else: y_BKG = (y[i_Min-3]+y[i_Min-2]+y[i_Min-1]+y[i_Min])/4      
+                        y2 = (y - y_BKG) / Div_Area_Val[j]       
+                additional = pd.DataFrame({'BE'+Sample_name[j]: x_BE, file[j]:y3})
+                new = pd.concat([df_B1s,additional],axis =1)
+                df_B1s = new  
+                df_B1sT.append(Sample_name[j])
+                if (AutoShirley == True) or (len(df1.columns) > j_start + 4):                
+                    if (AutoShirley == True) or (df1.iloc[i_start-2,j_start+4] == 'Backgnd.'):
+                        additional = pd.DataFrame({'BE'+Sample_name[j]: x_BE, file[j]:y3})
+                        new = pd.concat([df_B1ss,additional],axis =1)
+                        df_B1ss = new  
+                        df_B1ssT.append(Sample_name[j])
+            #----------------------------------------------------
             
             #-----CHECK F1s--------------------------------------
             elif plotname == 'F 1s':
@@ -2835,7 +2884,7 @@ def _run():
     #Val---------------------------------------------------
     tmplist = list(df_val)
     if len(tmplist)>2:
-        plot_comp(df_val, df_valT,7,'VB',True,-2,12.5, 0)
+        plot_comp(df_val, df_valT,7,'VB',True,-2,14, 0)
         df_val.to_csv(AnaFolder+'Data_CSV\comp_valence.csv', sep='\t')
         if plotline == True:
             tmplist = list(df_val)
@@ -3912,7 +3961,45 @@ def _run():
             if plotline == True:
                 plot_line(DEF_lines, df_C1ss[tmplist[0]], MinMaxC1s, MinC1s, MaxC1s, df_C1ss[tmplist[2*LabellingNumber+1]], 1.12)
     #C1s---------------------------------------------------
+
+    #B1s---------------------------------------------------
+    tmplist = list(df_B1s)
     
+    #      Checking for labelling----------------
+    if LabellingAutoHeight == True: 
+        TmpDef1 = df_B1s
+        TmpMin = MinB1s
+        TmpMax = MaxB1s
+        I_maxCOMP = 0
+        for i in range(0, int(len(TmpDef1.columns)/2)):
+            
+            for ix_Max in range (i_start2,len(TmpDef1[tmplist[2*i]])+i_start2):
+                if TmpDef1[tmplist[2*i]].iloc[ix_Max] < TmpMax: break
+            for ix_Min in range (i_start2,len(TmpDef1[tmplist[2*i]])+i_start2):
+                if TmpDef1[tmplist[2*i]].iloc[ix_Min] < TmpMin: break
+        
+            if ix_Min == ix_Max : I_maxCOMP = max(TmpDef1[tmplist[2*i+1]])
+            
+            elif I_maxCOMP <  max(TmpDef1[tmplist[2*i+1]].iloc[ix_Max:ix_Min]):
+                I_maxCOMP = max(TmpDef1[tmplist[2*i+1]].iloc[ix_Max:ix_Min])
+                LabellingNumber = i
+                #print("I_max: ", I_maxCOMP, "FileNumber: ", )
+    #      Checking for labelling----------------
+    
+    if len(tmplist)>2 : 
+        i2 =plot_comp(df_B1s, df_B1sT,4,'B 1s',MinMaxB1s, MinB1s, MaxB1s,i2)
+        df_B1s.to_csv(AnaFolder+'Data_CSV\comp_B1s.csv', sep='\t')
+        if plotline == True:
+            if UseOffsetComp == True: LabellingNumber = 0
+            plot_line(DEF_lines, df_B1s[tmplist[0]], MinMaxB1s, MinB1s, MaxB1s, df_B1s[tmplist[2*LabellingNumber+1]], 1.12)
+    tmplist = list(df_B1ss)
+    if len(tmplist)>2 : 
+        if IsShirley:
+            i2s =plot_comp(df_B1s, df_B1ssT,5,'B 1s',MinMaxB1s, MinB1s, MaxB1s,i2s)
+            df_B1ss.to_csv(AnaFolder+'Data_CSV\comp_B1sS.csv', sep='\t')
+            if plotline == True:
+                plot_line(DEF_lines, df_B1ss[tmplist[0]], MinMaxB1s, MinB1s, MaxB1s, df_B1ss[tmplist[2*LabellingNumber+1]], 1.12)
+    #B1s---------------------------------------------------    
     
     #F1s---------------------------------------------------
     tmplist = list(df_F1s)
