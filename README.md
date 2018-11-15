@@ -5,6 +5,7 @@ Requirement
 ------------
 
 The followings must be installed to run Avantage_To_plot_13.py:
+
 •	Python 3.6 or above
 •	Panda for python (Read Excel files)
 •	PPTX for python (Create PowerPoint presentation)
